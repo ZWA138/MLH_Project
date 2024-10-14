@@ -1,0 +1,18 @@
+Project Update: In-Hospital Mortality Prediction for Stroke Patients Using MIMIC-IV Data
+My Implementation until now:
+Data Extraction:
+Extracted key clinical features from MIMIC-IV, including lab results (e.g., Urea Nitrogen/Creatinine ratio) and vital signs (e.g., Heart Rate, Blood Pressure, Respiratory Rate).
+Merged this data with in-hospital mortality (hospital_expire_flag) from the admissions table.
+Initial Modeling:
+Trained a Logistic Regression model with features including BUN/Creatinine ratio and vital signs.
+Achieved an accuracy of ~82% and an ROC AUC of ~0.66 after handling missing values via imputation and NaN removal.
+Advanced Models:
+Implemented Random Forest and XGBoost with hyperparameter tuning using RandomizedSearchCV to improve predictive performance.
+These models are currently running, and we’ll share their evaluation results (accuracy and ROC AUC) soon.
+Model Performance:
+Random Forest:
+Accuracy: 91.46%
+ROC AUC: 0.879
+XGBoost:
+Accuracy: 90.88%
+ROC AUC: 0.910
