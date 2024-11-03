@@ -2,13 +2,13 @@
 
 ## Project Overview
 
-This project aims to analyze and predict outcomes for stroke patients, using the MIMIC-IV clinical dataset. Using data stored in Google BigQuery, we perform data extraction, preprocessing, and visualization to build predictive models for in-hospital mortality risk. Machine learning algorithms such as Logistic Regression, LASSO Regression, Random Forest, and XGBoost are used to understand and predict patient outcomes.
+This project aims to analyze and predict outcomes for stroke patients. Using data stored in Google BigQuery from the MIMIC-IV clinical dataset, we perform data extraction, preprocessing, and visualization to build predictive models for in-hospital mortality risk. Machine learning algorithms such as Logistic Regression, LASSO Regression, Random Forest, and XGBoost are used to predict patient outcomes.
 
 ## Code Structure
 
 The primary components of this project include:
-- **Data Extraction:** Extracting stroke-related patient data using Google BigQuery and filtering by ICD-10 codes specific to ischemic (`I63`) and hemorrhagic strokes (`I61`).
-- **Data Preprocessing:** Handling missing values, encoding categorical variables, and standardizing data to ensure consistency across models.
+- **Data Extraction:** Extracting stroke-related data using Google BigQuery and filtering by ICD-10 codes specific to ischemic (`I63`) and hemorrhagic strokes (`I61`).
+- **Data Preprocessing:** Handling missing values, encoding categorical variables, and standardizing data.
 - **Modeling and Analysis:** Building and tuning machine learning models to predict in-hospital mortality. Models are evaluated using metrics such as accuracy, AUC, precision, recall, and F1-score.
 - **Visualization:** Plotting results and key metrics to assess model performance and analyze important features.
 
@@ -34,42 +34,15 @@ This project uses Google BigQuery to access the MIMIC-IV dataset hosted on the G
 2. Access to the `physionet-data` dataset on BigQuery, particularly the `mimiciv_hosp.diagnoses_icd` table.
 3. An authenticated GCP environment, which can be achieved in Google Colab with `google.colab.auth` for easy integration.
 
-## Code Walkthrough
+## Before Running Code
 
-### Step 1: Set Up GCP Environment
+### Set Up GCP Environment
 The project requires GCP authentication, achieved using:
 ```python
 from google.colab import auth
 auth.authenticate_user()
 ```
 Make sure to set the `project_id` variable to your own GCP project ID.
-
-### Step 2: Define Helper Functions
-The `run_query()` function is created to simplify running SQL queries on BigQuery and returning the data as a pandas DataFrame:
-```python
-def run_query(query, project_id=project_id):
-    return pandas_gbq.read_gbq(query, project_id=project_id, dialect='standard')
-```
-
-### Step 3: Query Stroke Data
-The project queries the MIMIC-IV `diagnoses_icd` table for patients with ischemic or hemorrhagic strokes based on ICD-10 codes. This subset of data will be used for analysis and modeling:
-```python
-select_stroke_query = f"""
-SELECT *
-FROM `physionet-data.mimiciv_hosp.diagnoses_icd`
-WHERE icd_code LIKE 'I61%' OR icd_code LIKE 'I63%';
-"""
-stroke_df = run_query(select_stroke_query)
-```
-
-### Step 4: Data Preprocessing and Analysis
-The extracted data is preprocessed by handling missing values, encoding categorical data, and scaling features. This step is crucial for ensuring that machine learning models can learn from the data effectively.
-
-### Step 5: Model Training and Evaluation
-Using Logistic Regression, LASSO Regression, Random Forest, and XGBoost for predicting in-hospital mortality risk. Each model is evaluated using cross-validation, and metrics such as accuracy, AUC, precision, recall, and F1-score are recorded for comparison.
-
-### Step 6: Visualization
-Results are visualized using `matplotlib` to help interpret model performance, feature importance, and key metrics across different models.
 
 ## Usage
 
